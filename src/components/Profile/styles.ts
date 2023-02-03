@@ -28,13 +28,18 @@ export const ProfileContainer = styled.div`
       justify-content: space-between;
       align-items: flex-start;
 
-      span {
+      a {
         color: ${(props) => props.theme.blue};
         font-size: 0.75rem;
+        text-decoration: none;
 
         display: flex;
         align-items: center;
         gap: 0.5rem;
+
+        &:hover {
+          border-bottom: 1px solid ${(props) => props.theme.blue};
+        }
       }
     }
 

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const HomeContainer = styled.div`
@@ -26,6 +27,7 @@ export const HomeContainer = styled.div`
 
     input {
       background: ${(props) => props.theme['base-input']};
+      color: ${(props) => props.theme['base-text']};
       border: 0;
       padding: 0.75rem 1rem;
       border: 1px solid ${(props) => props.theme['base-border']};
@@ -34,6 +36,10 @@ export const HomeContainer = styled.div`
 
       &::placeholder {
         color: ${(props) => props.theme['base-label']};
+      }
+
+      &:focus {
+        border: 1px solid ${(props) => props.theme.blue};
       }
     }
   }
@@ -47,10 +53,16 @@ export const HomeContainer = styled.div`
   }
 `
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(Link)`
   background: ${(props) => props.theme['base-post']};
   padding: 2rem;
   border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid ${(props) => props.theme['base-post']};
+
+  &:hover {
+    border: 1px solid ${(props) => props.theme['base-label']};
+  }
 
   header {
     display: flex;
@@ -72,6 +84,7 @@ export const CardContainer = styled.div`
   }
 
   p {
+    color: ${(props) => props.theme['base-title']};
     margin-top: 1.25rem;
 
     display: -webkit-box;

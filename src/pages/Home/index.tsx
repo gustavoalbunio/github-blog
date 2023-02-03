@@ -18,7 +18,7 @@ export function Home() {
 
       <section>
         {[1, 2, 3, 4, 5, 6].map((p) => (
-          <CardContainer key={p}>
+          <CardContainer to="/issue" key={p}>
             <header>
               <h2>JavaScript data types and data structures</h2>
               <span>Há 1 dia</span>

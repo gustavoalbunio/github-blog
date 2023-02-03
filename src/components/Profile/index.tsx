@@ -4,6 +4,7 @@ import {
   FaGithub,
   FaUserFriends,
 } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 import { useTheme } from 'styled-components'
 
 import { ProfileContainer } from './styles'
@@ -17,9 +18,9 @@ export function Profile() {
       <section>
         <h1>
           Gustavo Albunio
-          <span>
+          <Link to="https://github.com/gustavoalbunio" target="_blank">
             GITHUB <FaExternalLinkAlt />
-          </span>
+          </Link>
         </h1>
         <p>
           Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
