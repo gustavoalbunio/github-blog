@@ -1,3 +1,6 @@
+/* eslint-disable react/no-children-prop */
+import { useContext } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import {
   FaAngleLeft,
   FaCalendarDay,
@@ -5,12 +8,22 @@ import {
   FaExternalLinkAlt,
   FaGithub,
 } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
 import { useTheme } from 'styled-components'
+
+import { Issue as IssueProps, IssueContext } from '../../contexts/IssuesContext'
+
 import { HeaderIssue, IssueContainer } from './styles'
+import { dateDistanceFormat } from '../../utils/formatter'
+import { IssueContent } from './components/IssueContent'
 
 export function Issue() {
   const theme = useTheme()
+  const params = useParams()
+
+  const { issues } = useContext(IssueContext)
+
+  const issueSeleted =
+    issues.find((issue) => issue.id === Number(params.id)) || ({} as IssueProps)
 
   return (
     <IssueContainer>
@@ -20,24 +33,31 @@ export function Issue() {
             <Link to="/">
               <FaAngleLeft size={18} /> VOLTAR
             </Link>
-            <Link to="https://github.com/gustavoalbunio" target="_blank">
+            <Link to={issueSeleted.issueUrl} target="_blank">
               VER NO GITHUB <FaExternalLinkAlt />
             </Link>
           </header>
-          <h1>JavaScript data types and data structures</h1>
+          <h1>{issueSeleted.title}</h1>
           <div>
             <span>
-              <FaGithub size={18} color={theme['base-label']} /> gustavoalbunio
+              <FaGithub size={18} color={theme['base-label']} />{' '}
+              {issueSeleted.author}
             </span>
             <span>
-              <FaCalendarDay size={18} color={theme['base-label']} /> Há 1 dia
+              <FaCalendarDay size={18} color={theme['base-label']} />{' '}
+              {dateDistanceFormat(issueSeleted.createdAt)}
             </span>
             <span>
-              <FaComment size={18} color={theme['base-label']} /> 5 comentários
+              <FaComment size={18} color={theme['base-label']} />{' '}
+              {issueSeleted.totalComments > 1
+                ? `${issueSeleted.totalComments} comentários`
+                : `${issueSeleted.totalComments} comentário`}
             </span>
           </div>
         </section>
       </HeaderIssue>
+
+      <IssueContent content={issueSeleted.content} />
     </IssueContainer>
   )
 }

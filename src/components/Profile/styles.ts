@@ -21,6 +21,8 @@ export const ProfileContainer = styled.div`
     display: flex;
     flex-direction: column;
 
+    flex: 1;
+
     h1 {
       color: ${(props) => props.theme['base-title']};
       line-height: 1.3;

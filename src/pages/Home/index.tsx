@@ -1,39 +1,41 @@
+import { useContext } from 'react'
+
 import { Profile } from '../../components/Profile'
+import { SearchForm } from '../../components/SearchForm'
+import { IssueContext } from '../../contexts/IssuesContext'
+import { ProfileProvider } from '../../contexts/ProfileContext'
+import { dateDistanceFormat } from '../../utils/formatter'
 
 import { CardContainer, HomeContainer } from './styles'
 
 export function Home() {
+  const { issues, selectIssueToView } = useContext(IssueContext)
+
   return (
     <HomeContainer>
-      <Profile />
+      <ProfileProvider>
+        <Profile />
+      </ProfileProvider>
 
       <h3>
         Publicações
-        <span>6 publicações</span>
+        <span>{issues.length} publicações</span>
       </h3>
 
-      <form action="">
-        <input type="text" placeholder="Buscar conteúdo" />
-      </form>
+      <SearchForm />
 
       <section>
-        {[1, 2, 3, 4, 5, 6].map((p) => (
-          <CardContainer to="/issue" key={p}>
+        {issues.map((issue) => (
+          <CardContainer
+            to={`/issue/${issue.id}`}
+            key={issue.id}
+            onClick={() => selectIssueToView(issue)}
+          >
             <header>
-              <h2>JavaScript data types and data structures</h2>
-              <span>Há 1 dia</span>
+              <h2>{issue.title}</h2>
+              <span>{dateDistanceFormat(issue.createdAt)}</span>
             </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn. Dynamic typing JavaScript is a loosely typed and
-              dynamic language. Variables in JavaScript are not directly
-              associated with any particular value type, and any variable can be
-              assigned (and re-assigned)
-            </p>
+            <p>{issue.content}</p>
           </CardContainer>
         ))}
       </section>
